@@ -140,4 +140,42 @@ public class MatrixOperations {
 		
 		return matrixProduct;
 	}
+	
+	private int findDeterminant(int[][] arr) {
+		if(arr.length==2) {
+			return arr[0][0] * arr[1][1] - arr[0][1] * arr[1][0];
+		}
+		else {
+			int determinant = 0;
+			
+			for (int i = 0; i < arr[0].length; i++) {
+				determinant += Math.pow(-1, i) * arr[0][i] * findDeterminant(findCofactor(arr, i));
+//				System.out.println(determinant + " : " + Math.pow(-1, i));
+			}
+			
+			return determinant;
+		}
+	}
+	
+	private int[][] findCofactor(int[][] arr, int n){
+//		System.out.println("cofactor for " + n);
+		
+		int length = arr.length - 1;
+		int[][] cofactor = new int[length][length];
+		
+		for(int i = 0; i < length; i++) {
+			for (int j = 0; j < length; j++) {
+				
+				if(j >= n) {
+					cofactor[i][j] = arr[i+1][j+1];
+				} else {
+					cofactor[i][j] = arr[i+1][j];
+				}
+				
+//				System.out.println("Cofactor element: " + i + " : " + j + " -> " + cofactor[i][j]);
+			}
+		}
+		
+		return cofactor;
+	}
 }
