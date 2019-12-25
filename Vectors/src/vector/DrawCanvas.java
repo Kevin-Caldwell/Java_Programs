@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 
 public class DrawCanvas extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3300340185153690146L;
 	int x = 0;
 	int y = 0;
 	int w = 0;

@@ -121,6 +121,10 @@ public class Vector {
 		return new Vector(magnitude, angle);
 	}
 
+	public static Vector addVectors(Vector v1, Vector v2) {
+		return new Vector(v1.startX, v1.startY, v1.xComponent + v2.xComponent, v1.yComponent + v2.yComponent, true);
+	}
+
 	public static Vector addVectors(Vector[] arr) {
 		double xComponent = 0;
 		double yComponent = 0;
@@ -132,7 +136,7 @@ public class Vector {
 
 		return new Vector(arr[0].startX, arr[0].startY, xComponent, yComponent, true);
 	}
-	
+
 	public static Vector addVectors(ArrayList<Vector> arr) {
 		double xComponent = 0;
 		double yComponent = 0;
