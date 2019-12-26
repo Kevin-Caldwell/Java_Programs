@@ -37,6 +37,7 @@ public class DisplayGame extends JFrame {
 	Car car;
 
 	JButton pickColor;
+	DrawCanvas canvas;
 
 	public DisplayGame() {
 		GridBagLayout layout = new GridBagLayout();
@@ -45,7 +46,7 @@ public class DisplayGame extends JFrame {
 
 		car = new Car(startX, startY, startSpeed, startAngle);
 
-		DrawCanvas canvas = new DrawCanvas();
+		canvas = new DrawCanvas();
 		canvas.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 
 		System.out.println(canvas.getHeight());
@@ -55,15 +56,15 @@ public class DisplayGame extends JFrame {
 
 		pickColor = new JButton("Pick Color");
 		pickColor.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Color initialcolor = car.color;    
-				Color chosen = JColorChooser.showDialog(new JFrame("Pick Color"),"Select a color",initialcolor);    
-				car.color =  chosen;
-				
+				Color initialcolor = car.color;
+				Color chosen = JColorChooser.showDialog(new JFrame("Pick Color"), "Select a color", initialcolor);
+				car.color = chosen;
+
 				repaint();
-				
+
 			}
 		});
 		optionsPanel.add(pickColor);
@@ -115,46 +116,48 @@ public class DisplayGame extends JFrame {
 			switch (keyCode) {
 
 			case KeyEvent.VK_UP:
+
 				System.out.println("UP");
-				car.moveCarForward(0, MAX_ACCELERATION, 5);
+				car.moveCarForward(MAX_ACCELERATION, 4);
+
 				break;
 
 			case KeyEvent.VK_DOWN:
 				System.out.println("DOWN");
-				car.moveCarForward(0, -1 * MAX_ACCELERATION, 5);
+				car.moveCarForward(-1 * MAX_ACCELERATION, 4);
 				break;
 
 			case KeyEvent.VK_LEFT:
 				System.out.println("LEFT");
 				car.angle -= Math.toRadians(5);
-				car.moveCarForward(0, MAX_ACCELERATION, 5);
+				car.moveCarForward(MAX_ACCELERATION, 4);
 				break;
 
 			case KeyEvent.VK_RIGHT:
 				System.out.println("RIGHT");
 				car.angle += Math.toRadians(5);
-				car.moveCarForward(0, MAX_ACCELERATION, 5);
+				car.moveCarForward(MAX_ACCELERATION, 4);
 				break;
 			case KeyEvent.VK_W:
 				System.out.println("UP");
-				car.moveCarForward(0, MAX_ACCELERATION, 5);
+				car.moveCarForward(MAX_ACCELERATION, 4);
 				break;
 
 			case KeyEvent.VK_S:
 				System.out.println("DOWN");
-				car.moveCarForward(0, -1 * MAX_ACCELERATION, 5);
+				car.moveCarForward(-1 * MAX_ACCELERATION, 4);
 				break;
 
 			case KeyEvent.VK_A:
 				System.out.println("LEFT");
 				car.angle -= Math.toRadians(5);
-				car.moveCarForward(0, MAX_ACCELERATION, 5);
+				car.moveCarForward(MAX_ACCELERATION, 4);
 				break;
 
 			case KeyEvent.VK_D:
 				System.out.println("RIGHT");
 				car.angle += Math.toRadians(5);
-				car.moveCarForward(0, MAX_ACCELERATION, 5);
+				car.moveCarForward(MAX_ACCELERATION, 4);
 				break;
 			}
 
