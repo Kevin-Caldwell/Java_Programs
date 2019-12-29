@@ -11,6 +11,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class DrawCanvas extends JPanel {
@@ -19,7 +22,8 @@ public class DrawCanvas extends JPanel {
 	 */
 	private static final long serialVersionUID = 3333394521253800578L;
 	Level currLevel;
-	boolean crashed = false; 
+	boolean crashed = false;
+	Rectangle rect = null;
 
 	public DrawCanvas() {
 
@@ -33,8 +37,8 @@ public class DrawCanvas extends JPanel {
 
 		g.setColor(Color.BLUE);
 		drawCar(g);
-		System.out.println(Main.game.car.getX() + ", " + Main.game.car.getY() + ", " + Main.game.car.width + ", "
-				+ Main.game.car.length + " , " + Main.game.car.speed);
+//		System.out.println(Main.game.car.getX() + ", " + Main.game.car.getY() + ", " + Main.game.car.width + ", "
+//				+ Main.game.car.length + " , " + Main.game.car.speed + " , " + Main.game.car.acceleration);
 
 	}
 
@@ -45,7 +49,7 @@ public class DrawCanvas extends JPanel {
 
 		Graphics2D g2d = (Graphics2D) g;
 		
-		Rectangle rect = null;
+		
 		if (Main.game.car != null) {
 			rect = new Rectangle(Main.game.car.getX(), Main.game.car.getY(), Main.game.car.width, Main.game.car.length);
 		}
@@ -69,7 +73,6 @@ public class DrawCanvas extends JPanel {
 			if(polygon.intersects((Rectangle)currLevel.obstacles.get(i))) {
 				crashed = true;
 			}
-			System.out.println(crashed);
 		}
 		if(rect.equals(currLevel.startPosition)) {
 			System.out.println("Park car in yellow zone");
@@ -82,6 +85,8 @@ public class DrawCanvas extends JPanel {
 		if(rect.equals(currLevel.endPosition)) {
 			System.out.println("Level completed!");
 		}
+		
+		checkGameStatus();
 		
 
 	}
@@ -121,6 +126,17 @@ public class DrawCanvas extends JPanel {
 				g.fillPolygon((Polygon)obstacle);
 				
 			}
+		}
+	}
+	
+	public void checkGameStatus() {
+		if(currLevel.endPosition.contains(rect)) {
+			System.out.println("You won!");
+			JFrame endGame = new JFrame("Congratulations!");
+			endGame.add(new JButton("You won"));
+			endGame.setVisible(true);
+			endGame.setSize(50, 50);
+			
 		}
 	}
 

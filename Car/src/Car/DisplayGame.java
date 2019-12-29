@@ -2,10 +2,8 @@ package Car;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -25,12 +23,6 @@ public class DisplayGame extends JFrame {
 	 */
 	private static final long serialVersionUID = 7328956229243818502L;
 
-	public final int startX = 300;
-	public final int startY = 300;
-	public final double startSpeed = 0.0;
-	public final double startAngle = 0.0;
-	public final double MAX_ACCELERATION = 0.25;
-
 	public final int DEFAULT_WINDOW_WIDTH = 600;
 	public final int DEFAULT_WINDOW_HEIGHT = 600;
 
@@ -39,12 +31,17 @@ public class DisplayGame extends JFrame {
 	JButton pickColor;
 	DrawCanvas canvas;
 
+	boolean upPressed;
+	boolean downPressed;
+	boolean leftPressed;
+	boolean rightPressed;
+
 	public DisplayGame() {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(layout);
 
-		car = new Car(startX, startY, startSpeed, startAngle);
+		car = new Car();
 
 		canvas = new DrawCanvas();
 		canvas.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
@@ -87,9 +84,6 @@ public class DisplayGame extends JFrame {
 		gbc.gridheight = 5;
 		add(canvas, gbc);
 
-//		add(optionsPanel);
-//		add(canvas);
-
 		setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 		setTitle("Cars");
 		setVisible(true);
@@ -112,52 +106,62 @@ public class DisplayGame extends JFrame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+
 			int keyCode = e.getKeyCode();
 			switch (keyCode) {
 
 			case KeyEvent.VK_UP:
 
-				System.out.println("UP");
-				car.moveCarForward(MAX_ACCELERATION, 4);
+				System.out.println("UP pressed");
+//				car.acceleration = car.MAX_ACCELERATION;
+//				car.moveCarForward(MAX_ACCELERATION, 4);
+				upPressed = true;
 
 				break;
 
 			case KeyEvent.VK_DOWN:
-				System.out.println("DOWN");
-				car.moveCarForward(-1 * MAX_ACCELERATION, 4);
+				System.out.println("DOWN pressed");
+//				car.acceleration = -1 * car.MAX_ACCELERATION;
+				downPressed = true;
 				break;
 
 			case KeyEvent.VK_LEFT:
-				System.out.println("LEFT");
-				car.angle -= Math.toRadians(5);
-				car.moveCarForward(MAX_ACCELERATION, 4);
+				System.out.println("LEFT pressed");
+//				car.angle -= Math.toRadians(5);
+//				car.acceleration = car.MAX_ACCELERATION;
+				leftPressed = true;
 				break;
 
 			case KeyEvent.VK_RIGHT:
-				System.out.println("RIGHT");
-				car.angle += Math.toRadians(5);
-				car.moveCarForward(MAX_ACCELERATION, 4);
+				System.out.println("RIGHT pressed");
+//				car.angle += Math.toRadians(5);
+//				car.acceleration = car.MAX_ACCELERATION;
+				rightPressed = true;
 				break;
 			case KeyEvent.VK_W:
-				System.out.println("UP");
-				car.moveCarForward(MAX_ACCELERATION, 4);
+				System.out.println("UP pressed");
+//				car.acceleration = car.MAX_ACCELERATION;
+				upPressed = true;
 				break;
 
 			case KeyEvent.VK_S:
-				System.out.println("DOWN");
-				car.moveCarForward(-1 * MAX_ACCELERATION, 4);
+				System.out.println("DOWN pressed");
+//				car.acceleration = -1 * car.MAX_ACCELERATION;
+				downPressed = true;
 				break;
 
 			case KeyEvent.VK_A:
-				System.out.println("LEFT");
-				car.angle -= Math.toRadians(5);
-				car.moveCarForward(MAX_ACCELERATION, 4);
+				System.out.println("LEFT pressed");
+//				car.angle -= Math.toRadians(5);
+//				car.acceleration = car.MAX_ACCELERATION;
+				leftPressed = true;
 				break;
 
 			case KeyEvent.VK_D:
-				System.out.println("RIGHT");
-				car.angle += Math.toRadians(5);
-				car.moveCarForward(MAX_ACCELERATION, 4);
+				System.out.println("RIGHT pressed");
+//				car.angle += Math.toRadians(5);
+//				car.acceleration = car.MAX_ACCELERATION;
+				rightPressed = true;
 				break;
 			}
 
@@ -168,6 +172,49 @@ public class DisplayGame extends JFrame {
 		@Override
 		public void keyReleased(KeyEvent e) {
 
+			int keyCode = e.getKeyCode();
+			switch (keyCode) {
+
+			case KeyEvent.VK_UP:
+				System.out.println("UP released");
+				upPressed = false;
+				break;
+
+			case KeyEvent.VK_DOWN:
+				System.out.println("DOWN released");
+				downPressed = false;
+				break;
+
+			case KeyEvent.VK_LEFT:
+				System.out.println("LEFT released");
+				leftPressed = false;
+				break;
+
+			case KeyEvent.VK_RIGHT:
+				System.out.println("RIGHT released");
+				rightPressed = false;
+				break;
+			case KeyEvent.VK_W:
+				System.out.println("UP released");
+				upPressed = false;
+				break;
+
+			case KeyEvent.VK_S:
+				System.out.println("DOWN released");
+				downPressed = false;
+				break;
+
+			case KeyEvent.VK_A:
+				System.out.println("LEFT released");
+				leftPressed = false;
+				break;
+
+			case KeyEvent.VK_D:
+				System.out.println("RIGHT released");
+				rightPressed = false;
+				break;
+			}
+			repaint();
 		}
 
 	}
