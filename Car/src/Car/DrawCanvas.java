@@ -10,7 +10,9 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,13 +53,13 @@ public class DrawCanvas extends JPanel {
 		
 		
 		if (Main.game.car != null) {
-			rect = new Rectangle(Main.game.car.getX(), Main.game.car.getY(), Main.game.car.width, Main.game.car.length);
+			rect = new Rectangle((int)Main.game.car.topLeft_X, (int)Main.game.car.topLeft_Y, Main.game.car.width, Main.game.car.length);
 		}
 
-		Rectangle windShield = new Rectangle(Main.game.car.getX() + 5, Main.game.car.getY() + 10, 30, 10);
+		Rectangle windShield = new Rectangle((int)Main.game.car.topLeft_X + 5, (int)Main.game.car.topLeft_Y + 10, 30, 10);
 
-		Shape polygon = AffineTransform.getRotateInstance(Main.game.car.angle, Main.game.car.getX() + Main.game.car.width / 2, Main.game.car.getY() + Main.game.car.length / 2).createTransformedShape(rect);
-		Shape windshield = AffineTransform.getRotateInstance(Main.game.car.angle,Main.game.car.getX() + Main.game.car.width / 2, Main.game.car.getY() + Main.game.car.length / 2).createTransformedShape(windShield);
+		Shape polygon = AffineTransform.getRotateInstance(Main.game.car.angle, Main.game.car.topLeft_X + Main.game.car.width / 2, Main.game.car.topLeft_Y + Main.game.car.length / 2).createTransformedShape(rect);
+		Shape windshield = AffineTransform.getRotateInstance(Main.game.car.angle,Main.game.car.topLeft_X + Main.game.car.width / 2, Main.game.car.topLeft_Y + Main.game.car.length / 2).createTransformedShape(windShield);
 		
 		g2d.setColor(Main.game.car.color);
 		g2d.draw(polygon);
@@ -133,11 +135,12 @@ public class DrawCanvas extends JPanel {
 		if(currLevel.endPosition.contains(rect)) {
 			System.out.println("You won!");
 			JFrame endGame = new JFrame("Congratulations!");
-			endGame.add(new JButton("You won"));
+			endGame.add(new JLabel(new ImageIcon("Win.png")));
 			endGame.setVisible(true);
-			endGame.setSize(50, 50);
+			endGame.setSize(380, 131);
+			Main.graphics.interrupt();
 			
-		}
+		} 
 	}
 
 }

@@ -5,7 +5,9 @@ import java.awt.Point;
 
 public class Car {
 
-	Point topLeft;
+	double topLeft_X;
+	double topLeft_Y;
+	
 
 	double angle; // in rad
 	double speed;
@@ -25,55 +27,21 @@ public class Car {
 	public final double MAX_ACCELERATION = 0.20;
 
 	public Car() {
-		this.topLeft = new Point(startX, startY);
+		topLeft_X = startX;
+		topLeft_Y = startY;
 		this.angle = startAngle;
 		this.speed = startSpeed;
 	}
 
 	public Car(int x, int y, double speed, double angle) {
-		this.topLeft = new Point(x, y);
+		this.topLeft_X = x;
+		this.topLeft_Y = y;
 		this.angle = angle;
 		this.speed = speed;
 	}
 
 	public Point getTopLeft() {
-		return topLeft;
-	}
-
-	public void setTopLeft(Point topLeft) {
-		this.topLeft = topLeft;
-	}
-
-	public int getX() {
-		return topLeft.x;
-	}
-
-	public int getY() {
-		return topLeft.y;
-	}
-
-	public void setX(int x) {
-		topLeft.x = x;
-	}
-
-	public void setY(int y) {
-		topLeft.y = y;
-	}
-
-	public double getAngle() {
-		return angle;
-	}
-
-	public void setAngle(double angle) {
-		this.angle = angle;
-	}
-
-	public double getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
+		return new Point((int)topLeft_X, (int)topLeft_Y);
 	}
 
 	public double getDistance(double speed, double acceleration, double time) {
@@ -83,8 +51,8 @@ public class Car {
 	public void moveCar(double time) {
 		double distance = getDistance(speed, acceleration, time);
 
-		topLeft.x += (distance * Math.sin(angle));
-		topLeft.y -= (distance * Math.cos(angle));
+		topLeft_X += (distance * Math.sin(angle));
+		topLeft_Y -= (distance * Math.cos(angle));
 
 		speed += acceleration * time;
 
@@ -105,18 +73,6 @@ public class Car {
 	public void slowToStop(double time) {
 		speed = 0;
 		acceleration = 0;
-//		if(speed != 0) {
-//			if(acceleration != 0) {
-//				acceleration *= -1;				
-//			} else {
-//				if(speed < 0) {
-//					acceleration = MAX_ACCELERATION;
-//				} else {
-//					acceleration = -1 * MAX_ACCELERATION;
-//				}
-//			}
-//			System.out.println("slowing down");
-//			moveCar(time);
-//		}		
+	
 	}
 }

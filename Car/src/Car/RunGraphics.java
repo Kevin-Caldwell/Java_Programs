@@ -8,10 +8,8 @@ public class RunGraphics extends Thread {
 	@Override
 	public void run() {
 
-//		System.out.println("new thread created");
+		while (!isInterrupted()) {
 
-		while (Main.runGame) {
-//			System.out.println("loop");
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

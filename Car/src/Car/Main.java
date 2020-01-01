@@ -3,10 +3,13 @@ package Car;
 public class Main {
 
 	static DisplayGame game;
-	static boolean runGame = true;
+	
+	static RunGraphics graphics;
+
 	public static void main(String[] args) {
-		
+
 		game = new DisplayGame();
-		new RunGraphics().start();
+		graphics = new RunGraphics();
+		graphics.start();
 	}
 }
