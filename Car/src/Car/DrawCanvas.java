@@ -23,7 +23,7 @@ public class DrawCanvas extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 3333394521253800578L;
-	Level currLevel;
+	
 	boolean crashed = false;
 	Rectangle rect = null;
 
@@ -35,7 +35,6 @@ public class DrawCanvas extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		currLevel = new Level_One();
 
 		g.setColor(Color.BLUE);
 		drawCar(g);
@@ -47,7 +46,9 @@ public class DrawCanvas extends JPanel {
 	public void drawCar(Graphics g) {
 		
 		drawBackground(1, g);
-		drawStartAndFinish(1, g); 
+		drawStartAndFinish(1, g);
+		drawCarStatus(g);
+
 
 		Graphics2D g2d = (Graphics2D) g;
 		
@@ -69,22 +70,27 @@ public class DrawCanvas extends JPanel {
 		g2d.draw(windshield);
 		g2d.fill(windshield);
 		
+		
 		crashed = false;
-		for(int i = 0; i < currLevel.obstacles.size(); i++) {
+		for(int i = 0; i < Main.currLevel.obstacles.size(); i++) {
 			
-			if(polygon.intersects((Rectangle)currLevel.obstacles.get(i))) {
+			if(polygon.intersects((Rectangle)Main.currLevel.obstacles.get(i))) {
 				crashed = true;
 			}
 		}
-		if(rect.equals(currLevel.startPosition)) {
-			System.out.println("Park car in yellow zone");
+		if(!polygon.intersects(0, 0, 800, 800)) {
+			crashed = true;
 		}
-		
+				
 		if(crashed) {
-			Main.game.car.speed*=-1;
 			System.out.println("You have crashed!");
+			Main.game.car.topLeft_X = Main.currLevel.startPosition.x;
+			Main.game.car.topLeft_Y = Main.currLevel.startPosition.y;
+			Main.game.car.angle = 0;
+			Main.game.car.acceleration = 0;
+			Main.game.car.speed = 0;
 		}
-		if(rect.equals(currLevel.endPosition)) {
+		if(rect.equals(Main.currLevel.endPosition)) {
 			System.out.println("Level completed!");
 		}
 		
@@ -93,19 +99,33 @@ public class DrawCanvas extends JPanel {
 
 	}
 	
+	public void drawCarStatus(Graphics g) {
+		g.setColor(Color.WHITE);
+		g.drawString("Hi! ", 10, 10);
+		g.drawString(Main.game.car.speed + "", 400, 20);
+		g.drawString(Main.game.car.acceleration + "", 400, 40);
+		g.drawString(Main.game.car.angle + "", 400, 60);
+		g.drawString(Main.game.upPressed + "", 400, 80);
+		g.drawString(Main.game.downPressed + "", 400, 100);
+		g.drawString(Main.game.leftPressed + "", 400, 120);
+		g.drawString(Main.game.rightPressed + "", 400, 140);
+		g.drawString(Math.toRadians(RunGraphics.angleIncrement * RunGraphics.getAbs(Main.game.car.speed)) + "", 400, 160);
+
+	}
+	
 	public void drawStartAndFinish(int level, Graphics g) {
 		g.setColor(Color.GREEN);
-		g.fillRect(currLevel.startPosition.x, currLevel.startPosition.y, currLevel.startPosition.width, currLevel.startPosition.height);
+		g.fillRect(Main.currLevel.startPosition.x, Main.currLevel.startPosition.y, Main.currLevel.startPosition.width, Main.currLevel.startPosition.height);
 		g.setColor(Color.YELLOW);
-		g.fillRect(currLevel.endPosition.x, currLevel.endPosition.y, currLevel.endPosition.width, currLevel.endPosition.height);
+		g.fillRect(Main.currLevel.endPosition.x, Main.currLevel.endPosition.y, Main.currLevel.endPosition.width, Main.currLevel.endPosition.height);
 	}
 	
 	public void drawBackground(int level, Graphics g) {
 		
 		
-		g.setColor(currLevel.color);
+		g.setColor(Main.currLevel.color);
 		
-		for (Shape obstacle : currLevel.obstacles) {
+		for (Shape obstacle : Main.currLevel.obstacles) {
 			
 			if(obstacle instanceof Point) {
 				
@@ -132,8 +152,10 @@ public class DrawCanvas extends JPanel {
 	}
 	
 	public void checkGameStatus() {
-		if(currLevel.endPosition.contains(rect)) {
+		if(Main.currLevel.endPosition.contains(rect) && !Main.levelFinished) {
+			Main.levelFinished = true;
 			System.out.println("You won!");
+			
 			JFrame endGame = new JFrame("Congratulations!");
 			endGame.add(new JLabel(new ImageIcon("Win.png")));
 			endGame.setVisible(true);

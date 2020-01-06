@@ -15,16 +15,17 @@ public class Car {
 
 	Color color = Color.BLUE;
 
-	public final int length = 100;
-	public final int width = 40;
-	public final double topSpeed = 1.0;
+	public final static int length = 100;
+	public final static int width = 40;
+	public final double topSpeed = 100;
 
-	public final int startX = 300;
-	public final int startY = 300;
+	public final int startX = Main.currLevel.startPosition.x + (int)((Main.currLevel.startPosition.height - length) * 0.5);
+	public final int startY = Main.currLevel.startPosition.y + (int)((Main.currLevel.startPosition.width - width) * 0.5);
 
 	public final double startSpeed = 0.0;
 	public final double startAngle = 0.0;
-	public final double MAX_ACCELERATION = 0.20;
+	public final double MAX_ACCELERATION = 40;
+	public final double slow_factor = 10;
 
 	public Car() {
 		topLeft_X = startX;
@@ -61,18 +62,48 @@ public class Car {
 				speed = topSpeed;
 				acceleration = 0;
 			}
-		} else {
-			if (speed <= topSpeed) {
-				speed = -1* topSpeed;
+		} else if(speed < 0){
+			if (-1 * speed >= topSpeed) {
+				speed = -1 * topSpeed;
 				acceleration = 0;
 			}
 		}
 
 	}
+	
+	public int round(double speed) {
+		int num = (int)speed;
+		
+		if(num % 10 < 5) {
+			return num - num % 10;
+		} else {
+			return num - 10 + num % 10;
+		}
+	}
 
 	public void slowToStop(double time) {
-		speed = 0;
-		acceleration = 0;
+		if(round(speed) != 0) {
+			if(acceleration  != 0) {
+				if(speed < 0) {
+					acceleration += slow_factor;
+				} else if(speed > 0){
+					acceleration -= slow_factor;
+				}
+			} else {
+				if(speed < 0) {
+					acceleration += slow_factor;
+				} else if(speed > 0){
+					acceleration -= slow_factor;
+				}
+			}
+		} else {
+			speed = 0;
+			if(acceleration != 0) {
+				acceleration = 0;
+			}
+		}
+		
+		moveCar(time);
 	
 	}
 }

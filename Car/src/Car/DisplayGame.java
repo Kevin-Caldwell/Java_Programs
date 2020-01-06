@@ -40,17 +40,21 @@ public class DisplayGame extends JFrame {
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(layout);
-
-		car = new Car();
+		
+		
 
 		canvas = new DrawCanvas();
 		canvas.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+		repaint();
+		
 
 		System.out.println(canvas.getHeight());
 
 		JPanel optionsPanel = new JPanel();
 		optionsPanel.setSize(new Dimension(600, 100));
-
+		
+		car = new Car();
+		
 		pickColor = new JButton("Pick Color");
 		pickColor.addActionListener(new ActionListener() {
 
