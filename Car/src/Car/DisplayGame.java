@@ -29,6 +29,7 @@ public class DisplayGame extends JFrame {
 	Car car;
 
 	JButton pickColor;
+	JButton levelMakerButton;
 	DrawCanvas canvas;
 
 	boolean upPressed;
@@ -37,10 +38,15 @@ public class DisplayGame extends JFrame {
 	boolean rightPressed;
 
 	public DisplayGame() {
+		addWindowListener( new WindowAdapter() {
+		    public void windowOpened( WindowEvent e ){
+		        canvas.requestFocus();
+		    }
+		}); 
+		
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints gbc = new GridBagConstraints();
 		setLayout(layout);
-		
 		
 
 		canvas = new DrawCanvas();
@@ -69,7 +75,19 @@ public class DisplayGame extends JFrame {
 			}
 		});
 		optionsPanel.add(pickColor);
-		pickColor.addKeyListener(new GameControls());
+		canvas.addKeyListener(new GameControls());
+		
+		levelMakerButton = new JButton("Level Maker");
+		optionsPanel.add(levelMakerButton);
+		levelMakerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				new LevelMaker();
+				
+			}
+		});
 
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;

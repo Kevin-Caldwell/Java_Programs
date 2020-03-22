@@ -2,18 +2,11 @@ package vector;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class Test extends JFrame {
 
@@ -57,11 +50,11 @@ public class Test extends JFrame {
 //		yComponentPanel.add(new JLabel("Y Component: "));
 //		yComponentPanel.add(yComponentTextArea);
 
-		JButton submit = new JButton("Submit");
+//		JButton submit = new JButton("Submit");
 
 		DrawCanvas canvas = new DrawCanvas();
 		
-		Car car = new Car(100, 100, 5);
+//		Car car = new Car(100, 100, 5);
 
 
 //		controls.setLayout(new GridLayout(6, 1));

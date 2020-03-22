@@ -7,7 +7,6 @@ public class Main {
 	static RunGraphics graphics;
 	static Level currLevel;
 	static boolean levelFinished = false;
-	static ShowCarProperties carProperties;
 
 	public static void main(String[] args) {
 		currLevel = new Level_One(); 
